@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @ToString
 @Data
 @Entity
-@Table(name = "transaciton", schema = "public")
+@Table(name = "transaction", schema = "public")
 @DynamicUpdate
 public class Transaction {
 
