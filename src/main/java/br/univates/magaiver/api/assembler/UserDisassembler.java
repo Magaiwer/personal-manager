@@ -1,6 +1,6 @@
 package br.univates.magaiver.api.assembler;
 
-import br.univates.magaiver.api.dto.UserDTO;
+import br.univates.magaiver.api.dto.UserInput;
 import br.univates.magaiver.domain.model.User;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -14,12 +14,12 @@ public class UserDisassembler {
 
     private final ModelMapper modelMapper;
 
-    public User toDomain(UserDTO originDTO, Class<User> userDestination) {
+    public User toDomain(UserInput originDTO, Class<User> userDestination) {
         return modelMapper.map(originDTO, userDestination);
     }
 
-    public void copyToDomainObject(UserDTO userDTO, User user) {
+    public void copyToDomainObject(UserInput userInput, User user) {
         user.setGroups(null);
-        modelMapper.map(userDTO, user);
+        modelMapper.map(userInput, user);
     }
 }

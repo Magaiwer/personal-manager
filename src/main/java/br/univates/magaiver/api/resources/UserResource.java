@@ -3,13 +3,13 @@ package br.univates.magaiver.api.resources;
 import br.univates.magaiver.api.assembler.ModelMapperAssembler;
 import br.univates.magaiver.api.assembler.PageModelAssembler;
 import br.univates.magaiver.api.assembler.UserDisassembler;
-import br.univates.magaiver.api.dto.UserDTO;
-import br.univates.magaiver.api.dto.UserPasswordDTO;
-import br.univates.magaiver.api.dto.UserStatusDTO;
-import br.univates.magaiver.api.dto.UserWithPasswordDTO;
+import br.univates.magaiver.api.dto.UserInput;
+import br.univates.magaiver.api.dto.UserPasswordInput;
+import br.univates.magaiver.api.dto.UserStatusInput;
+import br.univates.magaiver.api.dto.UserWithPasswordInput;
 import br.univates.magaiver.api.model.PageModel;
-import br.univates.magaiver.api.model.UserGroupModel;
-import br.univates.magaiver.api.model.UserModel;
+import br.univates.magaiver.api.model.UserGroupOutput;
+import br.univates.magaiver.api.model.UserOutput;
 import br.univates.magaiver.domain.model.User;
 import br.univates.magaiver.domain.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -30,37 +30,37 @@ import javax.validation.Valid;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UserResource {
     private final UserService userService;
-    private final ModelMapperAssembler<User, UserModel> modelMapperAssembler;
-    private final ModelMapperAssembler<User, UserGroupModel> userGroupModelMapperAssembler;
+    private final ModelMapperAssembler<User, UserOutput> modelMapperAssembler;
+    private final ModelMapperAssembler<User, UserGroupOutput> userGroupModelMapperAssembler;
     private final UserDisassembler userDisassembler;
-    private final PageModelAssembler<User, UserModel> pageModelAssembler;
+    private final PageModelAssembler<User, UserOutput> pageModelAssembler;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public UserModel save(@Valid @RequestBody UserWithPasswordDTO userWithPasswordDTO) {
+    public UserOutput save(@Valid @RequestBody UserWithPasswordInput userWithPasswordDTO) {
         User user = userDisassembler.toDomain(userWithPasswordDTO, User.class);
         user = userService.save(user);
-        return modelMapperAssembler.toModel(user, UserModel.class);
+        return modelMapperAssembler.toModel(user, UserOutput.class);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public UserModel update(@PathVariable Long id, @Valid @RequestBody UserDTO userDTO) {
+    public UserOutput update(@PathVariable Long id, @Valid @RequestBody UserInput userInput) {
         User currentUser = userService.findByIdOrElseThrow(id);
-        userDisassembler.copyToDomainObject(userDTO, currentUser);
-        return modelMapperAssembler.toModel(userService.save(currentUser), UserModel.class);
+        userDisassembler.copyToDomainObject(userInput, currentUser);
+        return modelMapperAssembler.toModel(userService.save(currentUser), UserOutput.class);
     }
 
     @PutMapping("/{id}/password")
     @ResponseStatus(HttpStatus.OK)
-    public void changePassword(@PathVariable Long id, @Valid @RequestBody UserPasswordDTO userPasswordModel) {
+    public void changePassword(@PathVariable Long id, @Valid @RequestBody UserPasswordInput userPasswordModel) {
         userService.changePassword(id, userPasswordModel.getPassword(), userPasswordModel.getCurrentPassword());
     }
 
     @PutMapping("/{id}/change-status")
     @ResponseStatus(HttpStatus.OK)
-    public void changeStatus(@PathVariable Long id, @Valid @RequestBody UserStatusDTO userStatusDTO) {
-        userService.changeUserStatus(id, userStatusDTO.isEnabled() );
+    public void changeStatus(@PathVariable Long id, @Valid @RequestBody UserStatusInput userStatusInput) {
+        userService.changeUserStatus(id, userStatusInput.isEnabled() );
     }
 
     @DeleteMapping("/{id}")
@@ -70,14 +70,14 @@ public class UserResource {
     }
 
     @GetMapping
-    public PageModel<UserModel> findAll(Pageable pageable) {
+    public PageModel<UserOutput> findAll(Pageable pageable) {
         Page<User> user = userService.findAll(pageable);
-        return pageModelAssembler.toCollectionPageModel(user, UserModel.class);
+        return pageModelAssembler.toCollectionPageModel(user, UserOutput.class);
     }
 
     @GetMapping("/{id}")
-    public UserGroupModel findById(@PathVariable Long id) {
+    public UserGroupOutput findById(@PathVariable Long id) {
         User user = userService.findCompleteByIdOrElseThrow(id);
-        return userGroupModelMapperAssembler.toModel(user, UserGroupModel.class);
+        return userGroupModelMapperAssembler.toModel(user, UserGroupOutput.class);
     }
 }

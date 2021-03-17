@@ -18,8 +18,8 @@ public class ModelMapperDisassembler<T, S> {
 
     private final ModelMapper modelMapper;
 
-    public S toDomain(T originDTO, Class<S> domain) {
-        return modelMapper.map(originDTO, domain);
+    public S toDomain(T originInput, Class<S> domain) {
+        return modelMapper.map(originInput, domain);
     }
 
     public void copyToDomainObject(T originInput, Object destination) {

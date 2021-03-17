@@ -18,13 +18,13 @@ public class ModelMapperAssembler<T, S> {
 
     private final ModelMapper modelMapper;
 
-    public S toModel(T domain, Class<S> objectDTO) {
-        return modelMapper.map(domain, objectDTO);
+    public S toModel(T domain, Class<S> objectInput) {
+        return modelMapper.map(domain, objectInput);
     }
 
-    public List<S> toCollectionModel(Collection<T> domains, Class<S> objectDTO) {
+    public List<S> toCollectionModel(Collection<T> domains, Class<S> objectInput) {
         return domains.stream()
-                .map(domain -> toModel(domain, objectDTO))
+                .map(domain -> toModel(domain, objectInput))
                 .collect(Collectors.toList());
     }
 }

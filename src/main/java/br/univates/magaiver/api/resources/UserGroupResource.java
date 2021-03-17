@@ -1,7 +1,7 @@
 package br.univates.magaiver.api.resources;
 
 import br.univates.magaiver.api.assembler.ModelMapperAssembler;
-import br.univates.magaiver.api.model.GroupModel;
+import br.univates.magaiver.api.model.GroupOutput;
 import br.univates.magaiver.domain.model.Group;
 import br.univates.magaiver.domain.model.User;
 import br.univates.magaiver.domain.service.UserService;
@@ -21,12 +21,12 @@ import java.util.List;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UserGroupResource {
     private final UserService userService;
-    private final ModelMapperAssembler<Group, GroupModel> modelMapperAssembler;
+    private final ModelMapperAssembler<Group, GroupOutput> modelMapperAssembler;
 
     @GetMapping
-    public List<GroupModel> findAll(@PathVariable Long userId) {
+    public List<GroupOutput> findAll(@PathVariable Long userId) {
         User user = userService.findByIdOrElseThrow(userId);
-        return modelMapperAssembler.toCollectionModel(user.getGroups(), GroupModel.class);
+        return modelMapperAssembler.toCollectionModel(user.getGroups(), GroupOutput.class);
     }
 
     @DeleteMapping("/{groupId}")
