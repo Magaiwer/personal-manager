@@ -1,0 +1,149 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-table-user
+      author: magaiver
+      preConditions:
+        - onFail: WARN
+          not:
+            tableExists:
+              tableName: users
+      changes:
+        - createTable:
+            tableName: users
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: user_pkey
+                  name: id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: name
+                  type: VARCHAR(250)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: email
+                  type: VARCHAR(250)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: password
+                  type: TEXT
+              - column:
+                  constraints:
+                    nullable: false
+                    defaultValueBoolean: true
+                  name: enabled
+                  type: Boolean
+              - column:
+                  constraints:
+                    nullable:
+                  name: created_at
+                  type: timestamp
+
+  - changeSet:
+      id:  create-table-groups
+      author:  magaiver
+      changes:
+        - createTable:
+            tableName:  groups
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: group_pkey
+                  name: id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: name
+                  type: VARCHAR(100)
+              - column:
+                  name: description
+                  type: VARCHAR(250)
+
+  - changeSet:
+      id:  create-table-permission
+      author:  magaiver
+      changes:
+        - createTable:
+            tableName:  permission
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: permission_pkey
+                  name: id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: role
+                  type: VARCHAR(100)
+              - column:
+                  name: description
+                  type: VARCHAR(250)
+
+  - changeSet:
+      id:  create-table-users_groups
+      author:  magaiver
+      changes:
+        - createTable:
+            tableName:  users_groups
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: user_group_pkey
+                    foreignKeyName: user_group_fkey
+                    references: users
+                  name: user_id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: group_user_pkey
+                    foreignKeyName: group_user_fkey
+                    references: groups
+                  name: group_id
+                  type: BIGINT
+
+  - changeSet:
+      id:  create-table-group_permission
+      author:  magaiver
+      changes:
+        - createTable:
+            tableName:  group_permission
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: group_id_pkey
+                    foreignKeyName: group_id_fkey
+                    references: groups
+                  name: group_id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: permission_id_pkey
+                    foreignKeyName: permission_id_fkey
+                    references: permission
+                  name: permission_id
+                  type: BIGINT
