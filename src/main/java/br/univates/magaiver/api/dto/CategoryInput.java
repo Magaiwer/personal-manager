@@ -1,5 +1,6 @@
 package br.univates.magaiver.api.dto;
 
+import lombok.Builder;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
@@ -9,6 +10,7 @@ import javax.validation.constraints.NotBlank;
  */
 
 @Data
+@Builder
 public class CategoryInput {
 
     private Long id;

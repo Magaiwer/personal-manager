@@ -1,31 +1,34 @@
 package br.univates.magaiver.api.dto;
 
-import br.univates.magaiver.domain.model.Category;
 import br.univates.magaiver.domain.model.TransactionType;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import lombok.Builder;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
-import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 /**
  * @author Magaiver Santos
  */
 
 @Data
+@Builder
+@JsonSerialize
 public class TransactionInput {
     private Long id;
-    @NotBlank
+
     private String name;
     private TransactionType transactionType;
-    @NotBlank
     private BigDecimal amount;
-    private LocalDateTime date;
-    @NotBlank
-    private Category category;
+
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    private LocalDate date;
+
+    private CategoryInput category;
     private boolean enabled;
 }
