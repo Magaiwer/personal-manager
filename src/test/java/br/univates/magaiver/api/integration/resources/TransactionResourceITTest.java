@@ -2,17 +2,15 @@ package br.univates.magaiver.api.integration.resources;
 
 import br.univates.magaiver.api.dto.CategoryInput;
 import br.univates.magaiver.api.dto.TransactionInput;
+import br.univates.magaiver.api.model.TransactionOutput;
 import br.univates.magaiver.domain.model.TransactionType;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
-import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Order;
 import org.springframework.http.HttpStatus;
 
-import javax.annotation.Priority;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -31,7 +29,7 @@ public class TransactionResourceITTest extends AbstractITTest {
 
     @Before
     public void setup() {
-       // RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
+        RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
         RestAssured.port = port;
         RestAssured.urlEncodingEnabled = false;
         RestAssured.basePath = "/transaction";
@@ -39,10 +37,6 @@ public class TransactionResourceITTest extends AbstractITTest {
         given().spec(requestSpecification);
     }
 
-    @After
-    public void reset() {
-        RestAssured.reset();
-    }
 
     @Test
     public void shouldBeReturnStatusCode200WhenFindAllTransactions() {
@@ -86,7 +80,31 @@ public class TransactionResourceITTest extends AbstractITTest {
     }
 
     @Test
-    @Order(1)
+    public void shouldBeReturnTransactionUpdatedOnBodyWhenUpdateTransactionWithSuccess() {
+        TransactionInput transaction = dataPreparing();
+        transaction.setName("Luz");
+        transaction.setId(TRANSACTION_ID_2);
+        transaction.setAmount(new BigDecimal("220.00"));
+
+        TransactionOutput transactionOutput = new TransactionOutput();
+
+        transactionOutput = given()
+                .accept(ContentType.JSON)
+                .contentType(ContentType.JSON)
+                .pathParam("id", transaction.getId())
+                .body(transaction)
+        .when()
+                .put("/{id}")
+        .then()
+                .statusCode(HttpStatus.OK.value())
+        .extract().body().as(TransactionOutput.class);
+
+        Assert.assertEquals(transaction.getName(), transactionOutput.getName());
+
+
+    }
+
+    @Test
     public void shouldBeReturnStatusCode200WhenFindById1() {
         given()
                 .pathParam("id", TRANSACTION_ID_2)
@@ -109,7 +127,6 @@ public class TransactionResourceITTest extends AbstractITTest {
     }
 
     @Test
-    @Order(2)
     public void shouldBeReturnStatusCode204WhenDeleteWithSuccess() {
         given()
                 .pathParam("id", TRANSACTION_ID_1)
@@ -120,6 +137,15 @@ public class TransactionResourceITTest extends AbstractITTest {
                 .statusCode(HttpStatus.NO_CONTENT.value());
     }
 
+    @Test
+    public void shouldBeReturnStatusCode400WhenWrongParameter() {
+        given()
+                .accept(ContentType.JSON)
+                .when()
+                .get("/category/")
+                .then()
+                .statusCode(HttpStatus.BAD_REQUEST.value());
+    }
 
     private TransactionInput dataPreparing() {
         CategoryInput categoryInput = CategoryInput.builder().id(1L).build();

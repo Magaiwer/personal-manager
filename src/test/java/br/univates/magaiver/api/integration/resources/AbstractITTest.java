@@ -1,9 +1,11 @@
 package br.univates.magaiver.api.integration.resources;
 
+import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.filter.log.LogDetail;
 import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
+import org.junit.After;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
@@ -43,6 +45,11 @@ abstract class AbstractITTest {
                         .addFilter(new RequestLoggingFilter(LogDetail.ALL))
                         .addFilter(new ResponseLoggingFilter(LogDetail.ALL))
                         .build();
+    }
+
+    @After
+    public void reset() {
+        RestAssured.reset();
     }
 
     protected String mockUser() {
