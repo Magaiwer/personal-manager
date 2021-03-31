@@ -7,8 +7,10 @@ import lombok.Builder;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -22,13 +24,19 @@ import java.time.LocalDate;
 public class TransactionInput {
     private Long id;
 
+    @NotEmpty
     private String name;
+
+    @NotNull
     private TransactionType transactionType;
+
+    @DecimalMin(value = "0.01")
     private BigDecimal amount;
 
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private LocalDate date;
 
-    private CategoryInput category;
+    @NotNull
+    private Long categoryId;
     private boolean enabled;
 }
