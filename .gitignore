@@ -25,3 +25,5 @@
 /.nb-gradle/
 
 /logs
+
+/prometheus/data
