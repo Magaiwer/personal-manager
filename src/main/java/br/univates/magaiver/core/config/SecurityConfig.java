@@ -38,8 +38,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/h2-console/**/**", "/swagger-ui.html/**");
+    public void configure(WebSecurity web) throws Exception {                               // only devel and test
+        web.ignoring().antMatchers("/h2-console/**/**", "/swagger-ui.html/**", "/actuator/prometheus/**");
     }
 
     @Override
