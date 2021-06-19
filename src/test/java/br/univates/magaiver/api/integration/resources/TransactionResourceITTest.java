@@ -1,8 +1,8 @@
 package br.univates.magaiver.api.integration.resources;
 
-import br.univates.magaiver.api.dto.CategoryInput;
-import br.univates.magaiver.api.dto.TransactionInput;
-import br.univates.magaiver.api.model.TransactionOutput;
+import br.univates.magaiver.api.model.input.TransactionInput;
+import br.univates.magaiver.api.model.output.TransactionOutput;
+import br.univates.magaiver.domain.model.Category;
 import br.univates.magaiver.domain.model.TransactionType;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -148,13 +148,14 @@ public class TransactionResourceITTest extends AbstractITTest {
     }
 
     private TransactionInput dataPreparing() {
-        CategoryInput categoryInput = CategoryInput.builder().id(1L).build();
+        Category category = new Category();
+        category.setId(1L);
 
         return TransactionInput.builder()
                 .amount(new BigDecimal("140.00"))
                 .date(LocalDate.now())
                 .name("Internet")
-                .categoryId(categoryInput.getId())
+                .category(category)
                 .enabled(true)
                 .transactionType(TransactionType.EXPENSE)
                 .build();
