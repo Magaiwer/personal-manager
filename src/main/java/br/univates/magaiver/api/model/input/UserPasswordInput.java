@@ -1,4 +1,4 @@
-package br.univates.magaiver.api.dto;
+package br.univates.magaiver.api.model.input;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -10,8 +10,9 @@ import javax.validation.constraints.NotBlank;
  */
 @Getter
 @Setter
-public class UserWithPasswordInput extends UserInput {
-
+public class UserPasswordInput {
     @NotBlank
     private String password;
+    @NotBlank
+    private String currentPassword;
 }

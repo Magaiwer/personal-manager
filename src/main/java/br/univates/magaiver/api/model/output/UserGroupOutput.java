@@ -1,4 +1,4 @@
-package br.univates.magaiver.api.model;
+package br.univates.magaiver.api.model.output;
 
 import br.univates.magaiver.domain.model.Group;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

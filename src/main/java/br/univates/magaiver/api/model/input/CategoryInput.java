@@ -1,15 +1,20 @@
-package br.univates.magaiver.api.model;
+package br.univates.magaiver.api.model.input;
 
+import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
+
+import javax.validation.constraints.NotBlank;
 
 /**
  * @author Magaiver Santos
  */
 
 @Data
-public class CategoryOutput {
+@Builder
+public class CategoryInput {
+
     private Long id;
+    @NotBlank
     private String name;
     private String description;
     private String icon;

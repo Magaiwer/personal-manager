@@ -1,4 +1,4 @@
-package br.univates.magaiver.api.model;
+package br.univates.magaiver.api.model.output;
 
 import lombok.Data;
 

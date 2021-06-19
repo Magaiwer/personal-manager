@@ -1,4 +1,4 @@
-package br.univates.magaiver.api.model;
+package br.univates.magaiver.api.model.output;
 
 import br.univates.magaiver.domain.model.TransactionType;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -17,11 +17,12 @@ import java.time.LocalDate;
 public class TransactionOutput {
     private Long id;
     private String name;
-    private TransactionType transactionType;
+    private TransactionType type;
     private BigDecimal amount;
 
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private LocalDate date;
     private CategoryOutput category;
+    private Long categoryId;
     private boolean enabled;
 }

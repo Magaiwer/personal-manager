@@ -1,6 +1,6 @@
 package br.univates.magaiver.api.assembler;
 
-import br.univates.magaiver.api.dto.UserInput;
+import br.univates.magaiver.api.model.input.UserInput;
 import br.univates.magaiver.domain.model.User;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;

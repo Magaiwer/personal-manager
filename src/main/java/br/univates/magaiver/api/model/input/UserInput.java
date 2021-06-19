@@ -1,4 +1,4 @@
-package br.univates.magaiver.api.dto;
+package br.univates.magaiver.api.model.input;
 
 import lombok.Data;
 

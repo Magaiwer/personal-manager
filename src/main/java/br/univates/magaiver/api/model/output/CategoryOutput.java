@@ -1,17 +1,16 @@
-package br.univates.magaiver.api.dto;
+package br.univates.magaiver.api.model.output;
 
 import lombok.Data;
-
-import javax.validation.constraints.NotBlank;
+import lombok.Getter;
 
 /**
  * @author Magaiver Santos
  */
-@Data
-public class GroupInput {
 
+@Data
+public class CategoryOutput {
     private Long id;
-    @NotBlank
     private String name;
     private String description;
+    private String icon;
 }

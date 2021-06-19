@@ -1,17 +1,16 @@
-package br.univates.magaiver.api.dto;
+package br.univates.magaiver.api.model.input;
 
+import br.univates.magaiver.domain.model.Category;
 import br.univates.magaiver.domain.model.TransactionType;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import javax.xml.bind.annotation.XmlRootElement;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -29,6 +28,7 @@ public class TransactionInput {
     private String name;
 
     @NotNull
+    @JsonProperty("type")
     private TransactionType transactionType;
 
     @DecimalMin(value = "0.01")
@@ -38,6 +38,7 @@ public class TransactionInput {
     private LocalDate date;
 
     @NotNull
-    private Long categoryId;
+    @JsonProperty(value = "categoryId")
+    private Category category;
     private boolean enabled;
 }
