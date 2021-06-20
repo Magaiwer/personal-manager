@@ -16,6 +16,7 @@ jobs:
        uses: actions/setup-java@v2.1.0
        with:
           java-version: 11.0.4
+          distribution: 'adopt'
      - name: Maven Package
        run: mvn -B clean package -DskipTests
      - name: Maven Verify
