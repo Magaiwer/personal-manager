@@ -23,15 +23,15 @@ jobs:
         run: mvn -B clean verify
     docker:
       name: Build and Publish docker image
-        runs-on: ubuntu-20.04
-        needs: [test]
-        env:
-          REPO: ${{ secrets.DOCKER_REPO }}
-        steps:
-          - uses: actions/checkout@v2
-          - name: Login to Docker Hub
-            run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASS }}
-          - name: Build the Docker image
-            run: docker build . --file Dockerfile --tag api-homologacao:$(date +%s)
+      runs-on: ubuntu-20.04
+      needs: [test]
+      env:
+        REPO: ${{ secrets.DOCKER_REPO }}
+      steps:
+        - uses: actions/checkout@v2
+        - name: Login to Docker Hub
+          run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASS }}
+        - name: Build the Docker image
+          run: docker build . --file Dockerfile --tag api-homologacao:$(date +%s)
 
 
