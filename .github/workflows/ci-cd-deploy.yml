@@ -1,0 +1,23 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ homologacao ]
+
+jobs:
+  test:
+    name: Execute Test
+    runs-on: ubuntu-20.04
+    
+    steps: 
+     - name: Checkout repository
+     - uses: actions/checkout@v2.3.4
+     
+     - name: Setup Java JDK
+     - uses: actions/setup-java@v2.1.0
+       with:
+          java-version: 11.0.4
+     - name: Maven Package
+       run: mvn -B clean package -DskipTests
+     - name: Maven Verify
+       run: mvn -B clean verify
