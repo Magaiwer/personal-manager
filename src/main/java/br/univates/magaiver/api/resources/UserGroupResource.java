@@ -1,7 +1,7 @@
 package br.univates.magaiver.api.resources;
 
 import br.univates.magaiver.api.assembler.ModelMapperAssembler;
-import br.univates.magaiver.api.model.GroupOutput;
+import br.univates.magaiver.api.model.output.GroupOutput;
 import br.univates.magaiver.domain.model.Group;
 import br.univates.magaiver.domain.model.User;
 import br.univates.magaiver.domain.service.UserService;

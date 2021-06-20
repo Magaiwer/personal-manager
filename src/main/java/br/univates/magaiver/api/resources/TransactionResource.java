@@ -3,18 +3,16 @@ package br.univates.magaiver.api.resources;
 import br.univates.magaiver.api.assembler.ModelMapperAssembler;
 import br.univates.magaiver.api.assembler.ModelMapperDisassembler;
 import br.univates.magaiver.api.assembler.PageModelAssembler;
-import br.univates.magaiver.api.dto.TransactionInput;
+import br.univates.magaiver.api.model.input.TransactionInput;
 import br.univates.magaiver.api.model.PageModel;
-import br.univates.magaiver.api.model.TransactionOutput;
+import br.univates.magaiver.api.model.output.TransactionOutput;
 import br.univates.magaiver.domain.model.Transaction;
 import br.univates.magaiver.domain.service.TransactionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -51,7 +49,8 @@ public class TransactionResource implements BaseResource<TransactionOutput, Tran
 
     @Override
     public PageModel<TransactionOutput> findAll(Pageable pageable) {
-        return pageModelAssembler.toCollectionPageModel(transactionService.findAll(pageable), TransactionOutput.class);
+        Page<Transaction> pageModel = transactionService.findAll(pageable);
+        return pageModelAssembler.toCollectionPageModel(pageModel, TransactionOutput.class);
     }
 
     @Override
