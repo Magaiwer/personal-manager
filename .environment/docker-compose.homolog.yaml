@@ -1,0 +1,45 @@
+version: "3"
+
+services:
+  app:
+    image: magaiwer/personal-manager:latest
+    container_name: api-homolog
+    ports:
+      - "9001:9000"
+    environment:
+      - ADDITIONAL_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n, -Xmx1G -Xms128m -XX:MaxMetaspaceSize=128m
+      - PROFILE
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://172.17.0.1:5440/personal_manager?currentSchema=public
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+    depends_on:
+      - db-postgres
+
+  db-postgres:
+    image: postgres:latest
+    container_name: db-postgres-homolog
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: personal_manager
+    ports:
+      - '5440:5432'
+    volumes:
+      - postgres-data:/var/lib/postgresql/data-homolog
+      - ./init-database.sh:/docker-entrypoint-initdb.d/init-database.sh
+    networks:
+      - network
+    healthcheck:
+      test: pg_isready -U postgres -d personal_manager
+      interval: 10s
+      timeout: 3s
+      retries: 3
+
+networks:
+  network:
+    driver: bridge
+
+volumes:
+  postgres-data:
+    external: true

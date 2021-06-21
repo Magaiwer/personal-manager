@@ -1,0 +1,8 @@
+[
+  {
+    "id": "deploy",
+    "execute-command": "/home/univates/app-docker/deploy-by-hook.sh",
+    "command-working-directory": "/home/univates/app-docker/",
+    "response-message": "Deploying API server homologacao."
+  }
+]
