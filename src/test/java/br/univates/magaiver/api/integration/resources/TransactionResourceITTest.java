@@ -155,7 +155,7 @@ public class TransactionResourceITTest extends AbstractITTest {
                 .amount(new BigDecimal("140.00"))
                 .date(LocalDate.now())
                 .name("Internet")
-                .category(category)
+                .categoryId(category.getId())
                 .enabled(true)
                 .transactionType(TransactionType.EXPENSE)
                 .build();
