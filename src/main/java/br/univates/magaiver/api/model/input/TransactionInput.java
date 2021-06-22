@@ -39,6 +39,6 @@ public class TransactionInput {
 
     @NotNull
     @JsonProperty(value = "categoryId")
-    private Category category;
+    private Long categoryId;
     private boolean enabled;
 }
