@@ -1,0 +1,17 @@
+name: CD - Deploy Production
+
+on:
+  push:
+    branches: [ master ]
+
+  workflow_dispatch:
+  
+jobs:
+  deploy:
+    name: Deploy on server production - post webhook call
+    runs-on: ubuntu-latest
+    steps:
+      - name: Post webhook
+        uses: joelwmale/webhook-action@master
+        with:
+          url: ${{ secrets.DOCKER_WEBHOOK_URL_PROD }}
