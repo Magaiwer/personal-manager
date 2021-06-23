@@ -4,5 +4,11 @@
     "execute-command": "/home/univates/app-docker/deploy-by-hook.sh",
     "command-working-directory": "/home/univates/app-docker/",
     "response-message": "Deploying API server homologacao."
+  },
+  {
+    "id": "deploy-api-prod",
+    "execute-command": "/home/univates/app-docker/deploy-by-hook.prod.sh",
+    "command-working-directory": "/home/univates/app-docker/",
+    "response-message": "DEPLOYING API SERVER PRODUÇÃO."
   }
 ]
