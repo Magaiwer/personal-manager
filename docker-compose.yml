@@ -8,12 +8,14 @@ services:
     image: pesonal-mangager-api
     ports:
       - "9001:9000"
+    env_file:
+      - .env-file
     environment:
-      - ADDITIONAL_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n, -Xmx1G -Xms128m -XX:MaxMetaspaceSize=128m
+      #- ADDITIONAL_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n, -Xmx1G -Xms128m -XX:MaxMetaspaceSize=128m
       - PROFILE
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://172.17.0.1:5440/personal_manager?currentSchema=public
-      - SPRING_DATASOURCE_USERNAME=postgres
-      - SPRING_DATASOURCE_PASSWORD=postgres
+      #- SPRING_DATASOURCE_URL=jdbc:postgresql://172.17.0.1:5440/personal_manager?currentSchema=public
+      #- SPRING_DATASOURCE_USERNAME=postgres
+      #- SPRING_DATASOURCE_PASSWORD=postgres
     depends_on:
       - db-postgres
 
