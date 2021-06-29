@@ -4,6 +4,7 @@ import br.univates.magaiver.core.property.Messages;
 import br.univates.magaiver.domain.exception.EntityAlreadyInUseException;
 import br.univates.magaiver.domain.exception.EntityNotFoundException;
 import br.univates.magaiver.domain.model.Transaction;
+import br.univates.magaiver.domain.model.TransactionType;
 import br.univates.magaiver.domain.repository.TransactionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.List;
 
 import static java.lang.String.format;
 
@@ -58,5 +63,4 @@ public class TransactionService {
             throw new EntityAlreadyInUseException(format(message, id));
         }
     }
-
 }

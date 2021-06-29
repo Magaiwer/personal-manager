@@ -100,8 +100,6 @@ public class TransactionResourceITTest extends AbstractITTest {
         .extract().body().as(TransactionOutput.class);
 
         Assert.assertEquals(transaction.getName(), transactionOutput.getName());
-
-
     }
 
     @Test
