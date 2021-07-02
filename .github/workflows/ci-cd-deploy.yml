@@ -1,4 +1,4 @@
-name: CI/CD GSC
+name: CI/CD HOMOLOGACAO
 
 on:
   push:
