@@ -11,11 +11,11 @@ services:
     environment:
       - PROFILE=homolog
     depends_on:
-      - db-postgres
+      - db-homolog
 
-  db-postgres:
+  db-homolog:
     image: postgres:latest
-    container_name: db-postgres-homolog
+    container_name: db-homolog
     restart: unless-stopped
     environment:
       POSTGRES_USER: postgres

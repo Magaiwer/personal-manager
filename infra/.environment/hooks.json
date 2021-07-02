@@ -1,14 +1,28 @@
 [
   {
-    "id": "deploy",
+    "id": "deploy-api",
     "execute-command": "/home/univates/app-docker/deploy-by-hook.sh",
     "command-working-directory": "/home/univates/app-docker/",
-    "response-message": "Deploying API server homologacao."
+    "response-message": "Deploying API server HOMOLOG."
   },
   {
     "id": "deploy-api-prod",
     "execute-command": "/home/univates/app-docker/deploy-by-hook.prod.sh",
     "command-working-directory": "/home/univates/app-docker/",
-    "response-message": "DEPLOYING API SERVER PRODUÇÃO."
+    "response-message": "DEPLOYING API SERVER PRODUCTION."
+  },
+  {
+    "id": "deploy-front-prod",
+    "execute-command": "/home/univates/app-front/deploy-by-hook.prod.sh",
+    "command-working-directory": "/home/univates/app-front/",
+    "response-message": "DEPLOYING FRONTEND PRODUCTION."
+  },
+  {
+    "id": "deploy-front-homolog",
+    "execute-command": "/home/univates/app-front/deploy-by-hook.h.sh",
+    "command-working-directory": "/home/univates/app-front/",
+    "response-message": "DEPLOYING FRONTEND  HOMOLOG."
   }
+
+
 ]
