@@ -65,6 +65,16 @@ Tecnologias:
           with:
             url: ${{ secrets.DEPLOY_WEBHOOK_URL }}
   ```
+  #### Script deploy homologação executado pelo webhook no servidor 
+   -  Para e apaga o container e imagem de homologação, e reconstrói uma nova imagem que está no Dockerhub gerada fluxo de deploy
+  ```
+    #!/bin/sh
+    docker image rm -f magaiwer/personal-manager:latest
+    docker stop api-homolog
+    docker system prune -f
+    docker-compose -f docker-compose.homolog.yaml up -d
+  ```
+  
   ## Action Produção
   #### A action de produção é disparada quando ocorre um merge na branch master, acionando um Web hook no servidor que realiza o clone do ambiente de homolação que já está testado, para produção.
   
@@ -79,5 +89,38 @@ Tecnologias:
               url: ${{ secrets.DOCKER_WEBHOOK_URL_PROD }}
   
   ```  
+  #### Script produção executado pelo webhook no servidor 
+  -  Para e apaga o container de produção sob um novo apartir do container de homologação, criando uma network entre o container do banco de dados e o container da API, passa os argumentos de enviroment de produção para subir o container.
+  
+  ````
+
+  #!/bin/sh
+  docker stop api-prod
+  docker stop db-postgres-prod
+  docker image rm -f api-prod db-postgres-prod
+  docker system prune -f
+
+  docker network rm producao
+  docker network create producao
+
+  #docker commit api-homolog api-prod:latest
+  #docker commit db-postgres-homolog db-postgres-prod:latest
+
+  docker run \
+         --name db-postgres-prod \
+         --network producao \
+         -e POSTGRES_USER=postgres \
+         -e POSTGRES_PASSWORD=postgres \
+         -v postgres-data:/var/lib/postgresql/data \
+         -p 5432:5432 \
+         -d postgres:latest
+
+  #docker cp /home/univates/app-docker/ini-database.sh db-postgres-prod:/tmp/
+  #docker exec db-postgres-prod bash /tmp/init-database.sh
+
+  docker run -p 9002:9000 -d --env-file .env-file --name api-prod --network producao magaiwer/personal-manager java ${ADDITIONAL_OPTS} -jar /app-api/personal-manager-api.jar --spring.profiles.active=prod
+  
+  ````
+
 
 Frontend - https://github.com/Magaiwer/personal-manager-client
