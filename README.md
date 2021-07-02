@@ -17,8 +17,8 @@ Tecnologias:
 ## Action Homologação
 
  
-#####- Pull da branch homologação build e execução dos testes 
-- ```  
+##### Pull da branch homologação build e execução dos testes 
+ ```  
     test:
         name: Execute Test
         runs-on: ubuntu-20.04
@@ -36,7 +36,7 @@ Tecnologias:
           - name: Maven Verify
             run: mvn -B clean verify 
   ```
-  - ##### Construção da imagem docker e push para o DockerHub
+  #### Construção da imagem docker e push para o DockerHub
   ```
     docker:
       name: Build and Publish docker image
@@ -66,8 +66,7 @@ Tecnologias:
             url: ${{ secrets.DEPLOY_WEBHOOK_URL }}
   ```
   ## Action Produção
-  ##### A action de produção é disparada quando ocorre um merge na branch master,  acionando  
-  ##### um Web hook no servidor que realiza o clone do ambiente de homolação que já está testado, para produção.
+  #### A action de produção é disparada quando ocorre um merge na branch master, acionando um Web hook no servidor que realiza o clone do ambiente de homolação que já está testado, para produção.
   
   ```
     deploy:
