@@ -32,14 +32,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final JwtConfiguration jwtConfiguration;
     private final TokenProvider tokenProvider;
 
+    private static final String[] WHITELIST = {
+            "/h2-console/**/**",
+            "/v2/api-docs/**",
+            "/swagger-resources/**",
+            "/swagger-ui/**",
+            "/actuator/prometheus/**", // only devel and test
+            "/login/"
+    };
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(customUserDetailService).passwordEncoder(passwordEncoder());
     }
 
     @Override
-    public void configure(WebSecurity web) throws Exception {                               // only devel and test
-        web.ignoring().antMatchers("/h2-console/**/**", "/swagger-ui.html/**", "/actuator/prometheus/**");
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers(WHITELIST);
     }
 
     @Override
@@ -49,9 +58,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .cors().configurationSource(request -> new CorsConfiguration(corsConfiguration()))
                 .and()
                 .authorizeRequests()
-                .antMatchers("/h2-console/**/**").permitAll()
-                .antMatchers("/swagger-ui.html/**").permitAll()
-                .antMatchers("/login").permitAll()
+                .antMatchers(WHITELIST).permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling()

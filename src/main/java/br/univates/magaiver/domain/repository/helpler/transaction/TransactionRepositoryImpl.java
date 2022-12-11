@@ -11,7 +11,13 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+import java.time.LocalDate;
+import java.time.temporal.TemporalAdjuster;
+import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,14 +51,20 @@ public class TransactionRepositoryImpl implements TransactionQueries {
 
         if (filter != null) {
             if (filter.getCategoryId() != null) {
-                predicates.add(builder.equal(transactionEntity.get("category").get("id"), filter.getId()));
+                predicates.add(builder.equal(transactionEntity.get("category").get("id"), filter.getCategoryId()));
             }
 
-            if (filter.getDtStart() != null && filter.getDtEnd() != null) {
-                predicates.add(builder.between(transactionEntity.get("date"), filter.getDtStart(), filter.getDtEnd()));
+            if (filter.getMonthDate() != null) {
+                LocalDate startOfTheMonth = filter.getMonthDate().with(TemporalAdjusters.firstDayOfMonth());
+                LocalDate endOfTheMonth = filter.getMonthDate().with(TemporalAdjusters.lastDayOfMonth());
+                predicates.add(builder.between(transactionEntity.get("date"), startOfTheMonth, endOfTheMonth));
+            }
+
+            if (filter.getType() != null) {
+                predicates.add(builder.equal(transactionEntity.get("transactionType"), filter.getType()));
             }
         }
-        return  predicates.toArray(new Predicate[0]);
+        return predicates.toArray(new Predicate[0]);
     }
 
 
