@@ -20,9 +20,13 @@
         <spring-security-jwt.version>1.1.0.RELEASE</spring-security-jwt.version>
         <!--<spring-security-oauth2.version>2.4.0.RELEASE</spring-security-oauth2.version>-->
         <modelmapper.version>2.3.8</modelmapper.version>
+         <sonar.projectKey>Magaiwer_personal-manager</sonar.projectKey>
+         <sonar.organization>magaiwer</sonar.organization>
+         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     </properties>
 
     <dependencies>
+             
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
