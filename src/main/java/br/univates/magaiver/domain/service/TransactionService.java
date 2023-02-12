@@ -1,7 +1,5 @@
 package br.univates.magaiver.domain.service;
 
-import br.univates.magaiver.api.assembler.ModelMapperAssembler;
-import br.univates.magaiver.api.assembler.ModelMapperDisassembler;
 import br.univates.magaiver.api.assembler.PageModelAssembler;
 import br.univates.magaiver.api.model.PageModel;
 import br.univates.magaiver.api.model.filter.TransactionFilter;
@@ -22,6 +20,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import static br.univates.magaiver.api.singleton.MapperSingleton.TRANSACTION_MAPPER;
 import static java.lang.String.format;
 
 /**
@@ -35,16 +34,14 @@ public class TransactionService {
     private final TransactionRepository transactionRepository;
     private final Messages messages;
 
-    private final ModelMapperAssembler<Transaction, TransactionOutput> modelMapperAssembler;
-    private final ModelMapperDisassembler<TransactionInput, Transaction> modelMapperDisassembler;
     private final PageModelAssembler<Transaction, TransactionOutput> pageModelAssembler;
 
     private static final String MSG_ENTITY_IN_USE_KEY = "transaction.already.use";
 
     @Modifying
     public TransactionOutput save(TransactionInput transactionInput) {
-        Transaction transaction = modelMapperDisassembler.toDomain(transactionInput, Transaction.class);
-        return modelMapperAssembler.toModel(transactionRepository.save(transaction), TransactionOutput.class);
+        Transaction transaction = TRANSACTION_MAPPER.toDomain(transactionInput);
+        return TRANSACTION_MAPPER.toModel(transactionRepository.save(transaction));
     }
 
     public TransactionOutput update(TransactionInput transactionInput) {
@@ -68,7 +65,7 @@ public class TransactionService {
     public TransactionOutput findByIdOrElseThrow(Long id) {
         Transaction transaction = transactionRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(format(MSG_NOT_FOUND, id)));
-        return modelMapperAssembler.toModel(transaction, TransactionOutput.class);
+        return TRANSACTION_MAPPER.toModel(transaction);
     }
 
     @Transactional

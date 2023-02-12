@@ -66,6 +66,4 @@ public class TransactionRepositoryImpl implements TransactionQueries {
         }
         return predicates.toArray(new Predicate[0]);
     }
-
-
 }

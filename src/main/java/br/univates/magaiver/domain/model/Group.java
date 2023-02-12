@@ -1,21 +1,21 @@
 package br.univates.magaiver.domain.model;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
+import java.util.Objects;
 import java.util.Set;
 
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @ToString
-@Data
+@Getter
+@Setter
 @Entity
-@Table(name = "groups", schema = "public")
+@Table(name = "grupo", schema = "public")
 @DynamicUpdate
 public class Group {
-    @EqualsAndHashCode.Include
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -40,5 +40,18 @@ public class Group {
 
     public boolean addPermission(Permission permission) {
         return this.permissions.add(permission);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Group)) return false;
+        Group group = (Group) o;
+        return Objects.equals(getId(), group.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
     }
 }

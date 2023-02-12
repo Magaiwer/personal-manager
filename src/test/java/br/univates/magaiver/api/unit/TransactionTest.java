@@ -3,21 +3,21 @@ package br.univates.magaiver.api.unit;
 import br.univates.magaiver.domain.model.Transaction;
 import br.univates.magaiver.domain.model.TransactionType;
 import br.univates.magaiver.domain.service.TransactionService;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.Arrays;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TransactionTest {
 
     @Autowired
     private TransactionService transactionService;
 
-    @Before
+    @BeforeEach
     public void setup() {
     }
 
@@ -47,7 +47,7 @@ public class TransactionTest {
         BigDecimal result = transaction.getTotalExpenses(
                 Arrays.asList(transaction, transaction1, transaction2, transaction3, transaction4)
         );
-        Assert.assertEquals(expected, result);
+        assertEquals(expected, result);
     }
 
     @Test
@@ -76,7 +76,7 @@ public class TransactionTest {
         BigDecimal result = transaction.getTotalIncome(
                 Arrays.asList(transaction, transaction1, transaction2, transaction3, transaction4)
         );
-        Assert.assertEquals(expected, result);
+        assertEquals(expected, result);
     }
 
     @Test
@@ -105,7 +105,7 @@ public class TransactionTest {
         BigDecimal result = transaction.getBalance(
                 Arrays.asList(transaction, transaction1, transaction2, transaction3, transaction4)
         );
-        Assert.assertEquals(expected, result);
+        assertEquals(expected, result);
     }
 
     @Test
@@ -127,7 +127,7 @@ public class TransactionTest {
         BigDecimal result = transaction.getBalance(
                 Arrays.asList(transaction, transaction1, transaction2)
         );
-        Assert.assertEquals(expected, result);
+        assertEquals(expected, result);
     }
 
     @Test
@@ -149,7 +149,7 @@ public class TransactionTest {
         BigDecimal result = transaction.getBalance(
                 Arrays.asList(transaction, transaction1, transaction2)
         );
-        Assert.assertEquals(expected, result);
+        assertEquals(expected, result);
     }
 
     @Test
@@ -171,6 +171,6 @@ public class TransactionTest {
         BigDecimal result = transaction.getBalance(
                 Arrays.asList(transaction, transaction1, transaction2)
         );
-        Assert.assertEquals(expected, result);
+        assertEquals(expected, result);
     }
 }

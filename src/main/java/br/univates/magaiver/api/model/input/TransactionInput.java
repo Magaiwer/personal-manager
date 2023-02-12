@@ -1,6 +1,5 @@
 package br.univates.magaiver.api.model.input;
 
-import br.univates.magaiver.domain.model.Category;
 import br.univates.magaiver.domain.model.TransactionType;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -38,7 +37,11 @@ public class TransactionInput {
     private LocalDate date;
 
     @NotNull
-    @JsonProperty(value = "categoryId")
+    @JsonProperty(value = "category")
     private Long categoryId;
+
+    @NotNull
+    @JsonProperty(value = "account")
+    private Long accountId;
     private boolean enabled;
 }

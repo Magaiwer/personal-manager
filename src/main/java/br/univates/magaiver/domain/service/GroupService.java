@@ -1,5 +1,9 @@
 package br.univates.magaiver.domain.service;
 
+import br.univates.magaiver.api.assembler.PageModelAssembler;
+import br.univates.magaiver.api.model.PageModel;
+import br.univates.magaiver.api.model.input.GroupInput;
+import br.univates.magaiver.api.model.output.GroupOutput;
 import br.univates.magaiver.core.property.Messages;
 import br.univates.magaiver.domain.exception.EntityAlreadyInUseException;
 import br.univates.magaiver.domain.exception.EntityNotFoundException;
@@ -9,12 +13,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import static br.univates.magaiver.api.singleton.MapperSingleton.GROUP_MAPPER;
 import static java.lang.String.format;
 
 @Service
@@ -22,18 +26,25 @@ import static java.lang.String.format;
 public class GroupService {
     private static final String MSG_NOT_FOUND = "Grupo de código %d não encontrado";
     private final GroupRepository groupRepository;
+    private final PageModelAssembler<Group, GroupOutput> pageModelAssembler;
     private final Messages messages;
 
     private static final String MSG_ENTITY_IN_USE_KEY = "group.already.use";
 
     @Modifying
-    public Group save(Group group) {
-        return groupRepository.save(group);
+    public GroupOutput save(GroupInput groupInput) {
+        Group group = groupRepository.save(GROUP_MAPPER.toDomain(groupInput));
+        return GROUP_MAPPER.toModel(group);
+    }
+
+    public GroupOutput update(GroupInput groupInput) {
+        findByIdOrElseThrow(groupInput.getId());
+        return this.save(groupInput);
     }
 
     @Transactional(readOnly = true)
-    public Page<Group> findAll(Pageable pageable) {
-        return groupRepository.findAll(pageable);
+    public PageModel<GroupOutput> findAll(Pageable pageable) {
+        return pageModelAssembler.toCollectionPageModel(groupRepository.findAll(pageable), GroupOutput.class);
     }
 
     @Transactional(readOnly = true)

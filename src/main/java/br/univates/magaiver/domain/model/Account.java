@@ -18,9 +18,9 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@Table(name = "category", schema = "public")
+@Table(name = "account", schema = "public")
 @DynamicUpdate
-public class Category implements Serializable {
+public class Account implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -31,18 +31,15 @@ public class Category implements Serializable {
     @Column
     private String description;
 
-    @Column
-    private String icon;
-
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Transaction> transactions;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Category)) return false;
-        Category category = (Category) o;
-        return Objects.equals(getId(), category.getId());
+        if (!(o instanceof Account)) return false;
+        Account account = (Account) o;
+        return Objects.equals(getId(), account.getId());
     }
 
     @Override

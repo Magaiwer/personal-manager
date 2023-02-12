@@ -47,11 +47,11 @@ databaseChangeLog:
                   type: timestamp
 
   - changeSet:
-      id:  create-table-groups
+      id:  create-table-grupo
       author:  magaiver
       changes:
         - createTable:
-            tableName:  groups
+            tableName:  grupo
             columns:
               - column:
                   autoIncrement: true
@@ -117,7 +117,7 @@ databaseChangeLog:
                     primaryKey: true
                     primaryKeyName: group_user_pkey
                     foreignKeyName: group_user_fkey
-                    references: groups
+                    references: grupo
                   name: group_id
                   type: BIGINT
 
@@ -135,7 +135,7 @@ databaseChangeLog:
                     primaryKey: true
                     primaryKeyName: group_id_pkey
                     foreignKeyName: group_id_fkey
-                    references: groups
+                    references: grupo
                   name: group_id
                   type: BIGINT
               - column:

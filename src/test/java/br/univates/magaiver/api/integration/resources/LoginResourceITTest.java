@@ -2,19 +2,20 @@ package br.univates.magaiver.api.integration.resources;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 
-import static io.restassured.RestAssured.*;
+import static io.restassured.RestAssured.enableLoggingOfRequestAndResponseIfValidationFails;
+import static io.restassured.RestAssured.given;
 
 /**
  * @author Magaiver Santos
  */
 public class LoginResourceITTest extends AbstractITTest {
 
-    @Before
+    @BeforeEach
     public void setup() {
         enableLoggingOfRequestAndResponseIfValidationFails();
         RestAssured.port = port;
@@ -28,9 +29,9 @@ public class LoginResourceITTest extends AbstractITTest {
         given()
                 .accept(ContentType.JSON)
                 .body(mockWrongUser())
-        .when()
-            .post()
-        .then()
+                .when()
+                .post()
+                .then()
                 .statusCode(HttpStatus.UNAUTHORIZED.value());
     }
 
@@ -39,9 +40,9 @@ public class LoginResourceITTest extends AbstractITTest {
         given()
                 .contentType("application/json")
                 .body(mockUser())
-        .when()
+                .when()
                 .post()
-        .then()
+                .then()
                 .statusCode(HttpStatus.OK.value());
     }
 
@@ -50,14 +51,14 @@ public class LoginResourceITTest extends AbstractITTest {
         String token = given()
                 .contentType("application/json")
                 .body(mockUser())
-        .when()
+                .when()
                 .post()
-        .then()
+                .then()
                 .statusCode(HttpStatus.OK.value())
                 .extract()
                 .header(HEADER_STRING);
 
-        Assert.assertNotNull(token);
+        Assertions.assertNotNull(token);
     }
 
 }

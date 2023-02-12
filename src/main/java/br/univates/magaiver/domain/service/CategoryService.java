@@ -1,5 +1,9 @@
 package br.univates.magaiver.domain.service;
 
+import br.univates.magaiver.api.assembler.PageModelAssembler;
+import br.univates.magaiver.api.model.PageModel;
+import br.univates.magaiver.api.model.input.CategoryInput;
+import br.univates.magaiver.api.model.output.CategoryOutput;
 import br.univates.magaiver.core.property.Messages;
 import br.univates.magaiver.domain.exception.EntityAlreadyInUseException;
 import br.univates.magaiver.domain.exception.EntityNotFoundException;
@@ -15,6 +19,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import static br.univates.magaiver.api.singleton.MapperSingleton.CATEGORY_MAPPER;
 import static java.lang.String.format;
 
 /**
@@ -26,18 +31,27 @@ public class CategoryService {
 
     private static final String MSG_NOT_FOUND = "Categoria de código %d não encontrado";
     private final CategoryRepository categoryRepository;
+    private final PageModelAssembler<Category, CategoryOutput> pageModelAssembler;
     private final Messages messages;
 
     private static final String MSG_ENTITY_IN_USE_KEY = "category.already.use";
 
     @Modifying
-    public Category save(Category category) {
-        return categoryRepository.save(category);
+    public CategoryOutput save(CategoryInput categoryInput) {
+        Category category = categoryRepository.save(CATEGORY_MAPPER.toDomain(categoryInput));
+        return CATEGORY_MAPPER.toModel(category);
+    }
+
+    @Modifying
+    public CategoryOutput update(CategoryInput categoryInput) {
+        findByIdOrElseThrow(categoryInput.getId());
+        return this.save(categoryInput);
     }
 
     @Transactional(readOnly = true)
-    public Page<Category> findAll(Pageable pageable) {
-        return categoryRepository.findAll(pageable);
+    public PageModel<CategoryOutput> findAll(Pageable pageable) {
+        Page<Category> pageModel = categoryRepository.findAll(pageable);
+        return pageModelAssembler.toCollectionPageModel(pageModel, CategoryOutput.class);
     }
 
     @Transactional(readOnly = true)

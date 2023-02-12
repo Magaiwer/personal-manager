@@ -6,9 +6,9 @@ import br.univates.magaiver.domain.model.Category;
 import br.univates.magaiver.domain.model.TransactionType;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 
 import java.math.BigDecimal;
@@ -27,7 +27,7 @@ public class TransactionResourceITTest extends AbstractITTest {
     public static final long TRANSACTION_ID_2 = 2L;
     public static final int TRANSACTION_ID_NOT_FOUND = 9999;
 
-    @Before
+    @BeforeEach
     public void setup() {
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
         RestAssured.port = port;
@@ -99,7 +99,7 @@ public class TransactionResourceITTest extends AbstractITTest {
                 .statusCode(HttpStatus.OK.value())
         .extract().body().as(TransactionOutput.class);
 
-        Assert.assertEquals(transaction.getName(), transactionOutput.getName());
+        Assertions.assertEquals(transaction.getName(), transactionOutput.getName());
     }
 
     @Test

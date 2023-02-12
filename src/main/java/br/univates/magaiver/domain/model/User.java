@@ -1,19 +1,20 @@
 package br.univates.magaiver.domain.model;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.time.OffsetDateTime;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
-@Data
-@EqualsAndHashCode(of = {"id"})
 @ToString
+@Getter
+@Setter
 @Entity
 @Table(name = "users", schema = "public")
 @DynamicUpdate
@@ -59,8 +60,20 @@ public class User {
         return this.getGroups().remove(group.get());
     }
 
-
     public boolean addGroup(Group group) {
         return this.getGroups().add(group);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+        User user = (User) o;
+        return Objects.equals(getId(), user.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
     }
 }

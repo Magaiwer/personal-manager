@@ -1,13 +1,11 @@
 package br.univates.magaiver.api.resources;
 
-import br.univates.magaiver.api.assembler.ModelMapperAssembler;
 import br.univates.magaiver.api.assembler.PageModelAssembler;
-import br.univates.magaiver.api.assembler.UserDisassembler;
+import br.univates.magaiver.api.model.PageModel;
 import br.univates.magaiver.api.model.input.UserInput;
 import br.univates.magaiver.api.model.input.UserPasswordInput;
 import br.univates.magaiver.api.model.input.UserStatusInput;
 import br.univates.magaiver.api.model.input.UserWithPasswordInput;
-import br.univates.magaiver.api.model.PageModel;
 import br.univates.magaiver.api.model.output.UserGroupOutput;
 import br.univates.magaiver.api.model.output.UserOutput;
 import br.univates.magaiver.domain.model.User;
@@ -21,6 +19,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+import static br.univates.magaiver.api.singleton.MapperSingleton.USER_MAPPER;
+
 /**
  * @author Magaiver Santos
  */
@@ -30,25 +30,21 @@ import javax.validation.Valid;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UserResource {
     private final UserService userService;
-    private final ModelMapperAssembler<User, UserOutput> modelMapperAssembler;
-    private final ModelMapperAssembler<User, UserGroupOutput> userGroupModelMapperAssembler;
-    private final UserDisassembler userDisassembler;
     private final PageModelAssembler<User, UserOutput> pageModelAssembler;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public UserOutput save(@Valid @RequestBody UserWithPasswordInput userWithPasswordDTO) {
-        User user = userDisassembler.toDomain(userWithPasswordDTO, User.class);
-        user = userService.save(user);
-        return modelMapperAssembler.toModel(user, UserOutput.class);
+        User user = USER_MAPPER.toDomain(userWithPasswordDTO);
+        return USER_MAPPER.toModel(userService.save(user));
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public UserOutput update(@PathVariable Long id, @Valid @RequestBody UserInput userInput) {
         User currentUser = userService.findByIdOrElseThrow(id);
-        userDisassembler.copyToDomainObject(userInput, currentUser);
-        return modelMapperAssembler.toModel(userService.save(currentUser), UserOutput.class);
+        currentUser = USER_MAPPER.toDomain(userInput);
+        return USER_MAPPER.toModel(userService.save(currentUser));
     }
 
     @PutMapping("/{id}/password")
@@ -60,7 +56,7 @@ public class UserResource {
     @PutMapping("/{id}/change-status")
     @ResponseStatus(HttpStatus.OK)
     public void changeStatus(@PathVariable Long id, @Valid @RequestBody UserStatusInput userStatusInput) {
-        userService.changeUserStatus(id, userStatusInput.isEnabled() );
+        userService.changeUserStatus(id, userStatusInput.isEnabled());
     }
 
     @DeleteMapping("/{id}")
@@ -78,6 +74,6 @@ public class UserResource {
     @GetMapping("/{id}")
     public UserGroupOutput findById(@PathVariable Long id) {
         User user = userService.findCompleteByIdOrElseThrow(id);
-        return userGroupModelMapperAssembler.toModel(user, UserGroupOutput.class);
+        return USER_MAPPER.toModelGroup(user);
     }
 }

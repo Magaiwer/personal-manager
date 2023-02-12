@@ -4,9 +4,9 @@ import br.univates.magaiver.api.model.input.CategoryInput;
 import br.univates.magaiver.api.model.output.CategoryOutput;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 
 import static io.restassured.RestAssured.given;
@@ -22,7 +22,7 @@ public class CategoryResourceITTest extends AbstractITTest {
     public static final long CATEGORY_ID_888 = 888L;
     public static final int CATEGORY_ID_NOT_FOUND = 9999;
 
-    @Before
+    @BeforeEach
     public void setup() {
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
         RestAssured.port = port;
@@ -83,7 +83,7 @@ public class CategoryResourceITTest extends AbstractITTest {
                 .statusCode(HttpStatus.OK.value())
                 .extract().body().as(CategoryOutput.class);
 
-        Assert.assertEquals(categoryInput.getName(), categoryOutput.getName());
+        Assertions.assertEquals(categoryInput.getName(), categoryOutput.getName());
     }
 
 /*    @Test
