@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-import static br.univates.magaiver.api.singleton.MapperSingleton.CATEGORY_MAPPER;
-
 /**
  * @author Magaiver Santos
  */
@@ -48,6 +46,6 @@ public class CategoryResource implements BaseResource<CategoryOutput, CategoryIn
 
     @Override
     public CategoryOutput findById(@PathVariable Long id) {
-        return CATEGORY_MAPPER.toModel(categoryService.findByIdOrElseThrow(id));
+        return categoryService.findByIdOrElseThrow(id);
     }
 }

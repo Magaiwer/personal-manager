@@ -1,4 +1,4 @@
-package br.univates.magaiver.domain.repository.helpler.transaction;
+package br.univates.magaiver.domain.repository.helper.transaction;
 
 import br.univates.magaiver.api.model.filter.TransactionFilter;
 import br.univates.magaiver.domain.model.Transaction;
@@ -16,7 +16,6 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.time.LocalDate;
-import java.time.temporal.TemporalAdjuster;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;

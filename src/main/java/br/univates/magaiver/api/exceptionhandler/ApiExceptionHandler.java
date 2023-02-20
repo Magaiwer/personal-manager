@@ -63,6 +63,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
                 .build();
         return handleExceptionInternal(ex, error, new HttpHeaders(), status, request);
     }
+
     @ExceptionHandler(AccessDeniedException.class)
     ResponseEntity<Object> handleAccessDeniedException(AccessDeniedException ex, WebRequest request) {
         HttpStatus status = HttpStatus.FORBIDDEN;
@@ -87,19 +88,18 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
     @Override
     protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, HttpHeaders headers, HttpStatus status, WebRequest request) {
-        Error error = Error.builder()
-                .timestamp(OffsetDateTime.now())
-                .status(status.value())
-                .userMessage(messages.getMessage(MSG_GENERIC_END_USER))
-                .build();
-        // TODO RETURN JUST TITLE
-        if( body == null) {
-            body =  error.builder().title(status.getReasonPhrase()).build();
-        } else if (body instanceof String) {
-            body =  error.builder().title((String) body).build();
+        Error error = null;
+        if (body == null) {
+            error = Error.builder()
+                    .timestamp(OffsetDateTime.now())
+                    .status(status.value())
+                    .userMessage(messages.getMessage(MSG_GENERIC_END_USER))
+                    .title(status.getReasonPhrase())
+                    .build();
+        } else if (body instanceof Error) {
+            error = (Error) body;
         }
-
-        return super.handleExceptionInternal(ex, body, headers, status, request);
+        return super.handleExceptionInternal(ex, error, headers, status, request);
     }
 
     @Override
@@ -121,7 +121,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     private ResponseEntity<Object> handleMethodArgumentTypeMismatch(MethodArgumentTypeMismatchException ex, HttpHeaders headers,
-            HttpStatus status, WebRequest request) {
+                                                                    HttpStatus status, WebRequest request) {
 
         ErrorType errorType = ErrorType.INVALID_PARAMETER;
 

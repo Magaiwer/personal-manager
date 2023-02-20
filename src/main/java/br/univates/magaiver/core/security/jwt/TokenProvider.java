@@ -118,7 +118,7 @@ public class TokenProvider implements Serializable {
         return new JWTClaimsSet.Builder()
                 .subject(authentication.getName())
                 .issueTime(new Date())
-                .expirationTime(new Date(new Date().getTime() + jwtConfiguration.getExpirationTimeMS() * 1000))
+                .expirationTime(new Date(new Date().getTime() + jwtConfiguration.getExpirationTimeMS() * 10000))
                 .claim(AUTHORITIES, getAuthorities(authentication))
                 .build();
     }

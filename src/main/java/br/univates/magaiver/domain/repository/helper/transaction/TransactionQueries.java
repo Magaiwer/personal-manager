@@ -1,4 +1,4 @@
-package br.univates.magaiver.domain.repository.helpler.transaction;
+package br.univates.magaiver.domain.repository.helper.transaction;
 
 import br.univates.magaiver.api.model.filter.TransactionFilter;
 import br.univates.magaiver.domain.model.Transaction;

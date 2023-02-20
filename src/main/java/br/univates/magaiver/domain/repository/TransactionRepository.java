@@ -1,7 +1,7 @@
 package br.univates.magaiver.domain.repository;
 
 import br.univates.magaiver.domain.model.Transaction;
-import br.univates.magaiver.domain.repository.helpler.transaction.TransactionQueries;
+import br.univates.magaiver.domain.repository.helper.transaction.TransactionQueries;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

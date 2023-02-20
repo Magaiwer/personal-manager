@@ -1,6 +1,6 @@
 --liquibase formatted sql
 
---changeset magaiver:create-table-transactions
+--changeset magaiver:create-table-transaction
 
 CREATE TABLE TRANSACTION (
   id SERIAL NOT NULL,
@@ -11,6 +11,8 @@ CREATE TABLE TRANSACTION (
   category_id BIGINT,
   account_id BIGINT,
   enabled BOOLEAN NOT NULL DEFAULT TRUE,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   CONSTRAINT pk_transaction_id PRIMARY KEY (id),
   CONSTRAINT fk_transaction_category_id FOREIGN KEY(category_id) references category
 );

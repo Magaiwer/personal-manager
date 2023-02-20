@@ -1,10 +1,10 @@
 --liquibase formatted sql
 
---changeset magaiver:create-table-transactions
+--changeset magaiver:insert-table-category
 
-INSERT INTO category VALUES(1, 'Educação','','');
-INSERT INTO category VALUES(2, 'Saúde','','');
-INSERT INTO category VALUES(3, 'Moradia','','');
-INSERT INTO category VALUES(4, 'Transporte','','');
-INSERT INTO category VALUES(5, 'Alimentação','','');
-INSERT INTO category VALUES(6, 'Lazer','','');
+INSERT INTO category ( name, description, icon) VALUES('Educação','','');
+INSERT INTO category ( name, description, icon) VALUES('Saúde','','');
+INSERT INTO category ( name, description, icon) VALUES('Moradia','','');
+INSERT INTO category ( name, description, icon) VALUES('Transporte','','');
+INSERT INTO category ( name, description, icon) VALUES('Alimentação','','');
+INSERT INTO category ( name, description, icon) VALUES('Lazer','','');
