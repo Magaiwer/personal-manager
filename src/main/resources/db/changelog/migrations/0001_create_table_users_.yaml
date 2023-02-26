@@ -38,12 +38,17 @@ databaseChangeLog:
                   constraints:
                     nullable: false
                     defaultValueBoolean: true
-                  name: enabled
+                  name: enable
                   type: Boolean
               - column:
                   constraints:
                     nullable:
                   name: created_at
+                  type: timestamp
+              - column:
+                  constraints:
+                    nullable:
+                  name: updated_at
                   type: timestamp
 
   - changeSet:

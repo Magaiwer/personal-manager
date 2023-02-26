@@ -32,6 +32,7 @@ public class UserService {
     private final GroupService groupService;
 
     private static final String MSG_ENTITY_IN_USE_KEY = "user.already.use";
+    private static final String MSG_USER_NOT_FOUND_KEY = "user.not.found";
 
     @Modifying
     public User save(User user) {
@@ -60,7 +61,7 @@ public class UserService {
     @Transactional
     public void changeUserStatus(Long userId, boolean status) {
         User user = findByIdOrElseThrow(userId);
-        user.setEnabled(status);
+        user.setEnable(status);
     }
 
     @Transactional(readOnly = true)
@@ -127,5 +128,10 @@ public class UserService {
         if (user.isNew() || !StringUtils.isEmpty(user.getPassword())) {
             //  user.setPassword(this.passwordEncoder.encode(user.getPassword()));
         }
+    }
+
+    public User findByUsernameOrElseThrow(String username) {
+        return userRepository.findByEmail(username)
+                .orElseThrow(() -> new UserNotFoundException(format(messages.getMessage(MSG_USER_NOT_FOUND_KEY), username)));
     }
 }

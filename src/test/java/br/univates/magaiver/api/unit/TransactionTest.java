@@ -24,23 +24,23 @@ public class TransactionTest {
     @Test
     public void shouldBeCalculateTotalExpenses() {
         Transaction transaction = new Transaction();
-        transaction.setTransactionType(TransactionType.EXPENSE);
+        transaction.setType(TransactionType.EXPENSE);
         transaction.setAmount(new BigDecimal("50.00"));
 
         Transaction transaction1 = new Transaction();
-        transaction1.setTransactionType(TransactionType.INCOME);
+        transaction1.setType(TransactionType.INCOME);
         transaction1.setAmount(new BigDecimal("5000.00"));
 
         Transaction transaction2 = new Transaction();
-        transaction2.setTransactionType(TransactionType.EXPENSE);
+        transaction2.setType(TransactionType.EXPENSE);
         transaction2.setAmount(new BigDecimal("500.00"));
 
         Transaction transaction3 = new Transaction();
-        transaction3.setTransactionType(TransactionType.EXPENSE);
+        transaction3.setType(TransactionType.EXPENSE);
         transaction3.setAmount(new BigDecimal("300.00"));
 
         Transaction transaction4 = new Transaction();
-        transaction4.setTransactionType(TransactionType.EXPENSE);
+        transaction4.setType(TransactionType.EXPENSE);
         transaction4.setAmount(new BigDecimal("1250.00"));
 
         BigDecimal expected = new BigDecimal("2100.00");
@@ -53,23 +53,23 @@ public class TransactionTest {
     @Test
     public void shouldBeCalculateTotalIncome() {
         Transaction transaction = new Transaction();
-        transaction.setTransactionType(TransactionType.INCOME);
+        transaction.setType(TransactionType.INCOME);
         transaction.setAmount(new BigDecimal("500.00"));
 
         Transaction transaction1 = new Transaction();
-        transaction1.setTransactionType(TransactionType.INCOME);
+        transaction1.setType(TransactionType.INCOME);
         transaction1.setAmount(new BigDecimal("5000.00"));
 
         Transaction transaction2 = new Transaction();
-        transaction2.setTransactionType(TransactionType.EXPENSE);
+        transaction2.setType(TransactionType.EXPENSE);
         transaction2.setAmount(new BigDecimal("500.00"));
 
         Transaction transaction3 = new Transaction();
-        transaction3.setTransactionType(TransactionType.EXPENSE);
+        transaction3.setType(TransactionType.EXPENSE);
         transaction3.setAmount(new BigDecimal("300.00"));
 
         Transaction transaction4 = new Transaction();
-        transaction4.setTransactionType(TransactionType.EXPENSE);
+        transaction4.setType(TransactionType.EXPENSE);
         transaction4.setAmount(new BigDecimal("1250.00"));
 
         BigDecimal expected = new BigDecimal("5500.00");
@@ -82,23 +82,23 @@ public class TransactionTest {
     @Test
     public void shouldBeCalculateBalance() {
         Transaction transaction = new Transaction();
-        transaction.setTransactionType(TransactionType.INCOME);
+        transaction.setType(TransactionType.INCOME);
         transaction.setAmount(new BigDecimal("500.00"));
 
         Transaction transaction1 = new Transaction();
-        transaction1.setTransactionType(TransactionType.INCOME);
+        transaction1.setType(TransactionType.INCOME);
         transaction1.setAmount(new BigDecimal("5000.00"));
 
         Transaction transaction2 = new Transaction();
-        transaction2.setTransactionType(TransactionType.EXPENSE);
+        transaction2.setType(TransactionType.EXPENSE);
         transaction2.setAmount(new BigDecimal("500.00"));
 
         Transaction transaction3 = new Transaction();
-        transaction3.setTransactionType(TransactionType.EXPENSE);
+        transaction3.setType(TransactionType.EXPENSE);
         transaction3.setAmount(new BigDecimal("300.00"));
 
         Transaction transaction4 = new Transaction();
-        transaction4.setTransactionType(TransactionType.EXPENSE);
+        transaction4.setType(TransactionType.EXPENSE);
         transaction4.setAmount(new BigDecimal("1250.00"));
 
         BigDecimal expected = new BigDecimal("3450.00");
@@ -111,15 +111,15 @@ public class TransactionTest {
     @Test
     public void shouldBeCalculateBalanceScaleUNNECESSARY() {
         Transaction transaction = new Transaction();
-        transaction.setTransactionType(TransactionType.INCOME);
+        transaction.setType(TransactionType.INCOME);
         transaction.setAmount(new BigDecimal("500.98"));
 
         Transaction transaction1 = new Transaction();
-        transaction1.setTransactionType(TransactionType.INCOME);
+        transaction1.setType(TransactionType.INCOME);
         transaction1.setAmount(new BigDecimal("5000.98"));
 
         Transaction transaction2 = new Transaction();
-        transaction2.setTransactionType(TransactionType.EXPENSE);
+        transaction2.setType(TransactionType.EXPENSE);
         transaction2.setAmount(new BigDecimal("500.99"));
 
 
@@ -133,15 +133,15 @@ public class TransactionTest {
     @Test
     public void shouldBeCalculateBalanceExpectedNEGATIVE() {
         Transaction transaction = new Transaction();
-        transaction.setTransactionType(TransactionType.EXPENSE);
+        transaction.setType(TransactionType.EXPENSE);
         transaction.setAmount(new BigDecimal("500.98"));
 
         Transaction transaction1 = new Transaction();
-        transaction1.setTransactionType(TransactionType.EXPENSE);
+        transaction1.setType(TransactionType.EXPENSE);
         transaction1.setAmount(new BigDecimal("5000.98"));
 
         Transaction transaction2 = new Transaction();
-        transaction2.setTransactionType(TransactionType.INCOME);
+        transaction2.setType(TransactionType.INCOME);
         transaction2.setAmount(new BigDecimal("500.99"));
 
 
@@ -155,15 +155,15 @@ public class TransactionTest {
     @Test
     public void shouldBeCalculateBalanceWithNegativeValues() {
         Transaction transaction = new Transaction();
-        transaction.setTransactionType(TransactionType.EXPENSE);
+        transaction.setType(TransactionType.EXPENSE);
         transaction.setAmount(new BigDecimal("-500.98"));
 
         Transaction transaction1 = new Transaction();
-        transaction1.setTransactionType(TransactionType.EXPENSE);
+        transaction1.setType(TransactionType.EXPENSE);
         transaction1.setAmount(new BigDecimal("-5000.98"));
 
         Transaction transaction2 = new Transaction();
-        transaction2.setTransactionType(TransactionType.INCOME);
+        transaction2.setType(TransactionType.INCOME);
         transaction2.setAmount(new BigDecimal("500.99"));
 
 

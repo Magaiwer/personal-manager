@@ -18,7 +18,7 @@ public class UserInput {
     @NotBlank
     @Email
     private String email;
-    private boolean enabled;
+    private boolean enable;
     private Set<GroupInput> groups;
 
 }

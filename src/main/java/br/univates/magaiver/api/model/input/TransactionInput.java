@@ -27,8 +27,7 @@ public class TransactionInput {
     private String name;
 
     @NotNull
-    @JsonProperty("type")
-    private TransactionType transactionType;
+    private TransactionType type;
 
     @DecimalMin(value = "0.01")
     private BigDecimal amount;

@@ -155,7 +155,7 @@ public class TransactionResourceITTest extends AbstractITTest {
                 .name("Internet")
                 .categoryId(category.getId())
                 .enabled(true)
-                .transactionType(TransactionType.EXPENSE)
+                .type(TransactionType.EXPENSE)
                 .build();
     }
 }

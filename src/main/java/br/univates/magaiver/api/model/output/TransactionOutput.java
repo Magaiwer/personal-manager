@@ -17,12 +17,13 @@ import java.time.LocalDate;
 public class TransactionOutput {
     private Long id;
     private String name;
-    private TransactionType transactionType;
+    private TransactionType type;
     private BigDecimal amount;
 
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private LocalDate date;
     private Long categoryId;
     private Long accountId;
+    private String categoryName;
     private boolean enabled;
 }

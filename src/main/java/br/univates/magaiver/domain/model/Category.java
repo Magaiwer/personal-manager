@@ -34,7 +34,7 @@ public class Category implements Serializable {
     @Column
     private String icon;
 
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "category")
     private Set<Transaction> transactions;
 
     @Override
